@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lokasi Bioskop - Absolute Cinema Cinemas</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Absolute Cinema</h1>
+                </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="promo.html">Promo</a></li>
+                    <li><a href="now-showing.html">Sedang Tayang</a></li>
+                    <li><a href="cinema.html" class="active">Bioskop</a></li>
+                    <li><a href="feedback.html">Umpan Balik</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-title">
+            <div class="container">
+                <h2>Lokasi Bioskop Absolute Cinema</h2>
+                <p>Temukan cabang Absolute Cinema terdekat di kota Anda.</p>
+                <div id="cinemaMap" style="height: 450px; width: 100%; margin-top: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></div>
+            </div>
+        </section>
+
+        <section class="cinema-listing">
+            <div class="container">
+                <div id="booking-movie-info" class="booking-movie-notice" style="display:none;">
+                    <p>Anda memilih bioskop untuk film: <strong id="selectedMovieTitlePlaceholder">[Nama Film Akan Tampil Di Sini]</strong>.</p>
+                    <p>Silakan pilih salah satu bioskop di bawah untuk melihat jadwal tayang dan melanjutkan pemesanan.</p>
+                </div>
+
+                <div class="cinema-actions">
+                    <button id="findNearestCinema" class="btn-gps">
+                        <img src="images/gps-icon.png" alt="GPS Icon" class="gps-icon"/> Cari Bioskop Terdekat Anda
+                    </button>
+                    <p id="locationStatus" class="location-status" aria-live="polite"></p>
+                </div>
+                <div class="cinema-grid">
+                    <article class="cinema-item" data-lat="-6.1930" data-lon="106.8219">
+                        <div class="cinema-image-wrapper">
+                            <img src="images/cinema-branch1.jpg" alt="Absolute Cinema Grand Indonesia">
+                        </div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Grand Indonesia</h3>
+                            <p class="cinema-address">Grand Indonesia Shopping Mall, Lantai 8, Jl. M.H. Thamrin No. 1, Jakarta Pusat, DKI Jakarta 10310</p>
+                            <div class="cinema-features">
+                                <span class="feature-tag">Dolby Atmos</span>
+                                <span class="feature-tag">Regular</span>
+                                <span class="feature-tag">Sweetbox</span>
+                            </div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Grand Indonesia">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Grand+Indonesia" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="cinema-item" data-lat="-6.8900" data-lon="107.5960">
+                        <div class="cinema-image-wrapper">
+                            <img src="images/cinema-branch2.jpg" alt="Absolute Cinema Paris Van Java">
+                        </div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Paris Van Java</h3>
+                            <p class="cinema-address">Paris Van Java Mall, Resort Level, Jl. Sukajadi No. 137-139, Bandung, Jawa Barat 40162</p>
+                            <div class="cinema-features">
+                                <span class="feature-tag">IMAX</span>
+                                <span class="feature-tag">Regular</span>
+                                <span class="feature-tag">Cafe</span>
+                            </div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Paris Van Java">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Paris+Van+Java+Mall+Bandung" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="cinema-item" data-lat="-7.2600" data-lon="112.7381">
+                        <div class="cinema-image-wrapper">
+                            <img src="images/cinema-branch3.jpg" alt="Absolute Cinema Tunjungan Plaza 6">
+                        </div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Tunjungan Plaza 6</h3>
+                            <p class="cinema-address">Tunjungan Plaza 6, Lantai 5, Jl. Jenderal Basuki Rachmat No. 8-12, Surabaya, Jawa Timur 60261</p>
+                            <div class="cinema-features">
+                                <span class="feature-tag">Dolby 7.1</span>
+                                <span class="feature-tag">Premiere</span>
+                            </div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Tunjungan Plaza 6">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Tunjungan+Plaza+6+Surabaya" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="cinema-item" data-lat="-6.2012" data-lon="106.7810">
+                        <div class="cinema-image-wrapper">
+                            <img src="images/cinema-branch4.jpg" alt="Absolute Cinema Senayan City">
+                        </div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Senayan City</h3>
+                            <p class="cinema-address">Senayan City, Lantai 5, Jl. Asia Afrika Lot. 19, Jakarta Pusat, DKI Jakarta 10270</p>
+                            <div class="cinema-features">
+                                <span class="feature-tag">Regular</span>
+                                <span class="feature-tag">Kids Zone</span>
+                            </div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Senayan City">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Senayan+City+Jakarta" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="cinema-item" data-lat="-6.2246" data-lon="106.8098">
+                        <div class="cinema-image-wrapper">
+                            <img src="images/cinema-branch5.jpg" alt="Absolute Cinema Plaza Senayan">
+                        </div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Plaza Senayan</h3>
+                            <p class="cinema-address">Plaza Senayan, Lantai 4, Jl. Asia Afrika No.8, Jakarta Pusat, DKI Jakarta 10270</p>
+                            <div class="cinema-features">
+                                <span class="feature-tag">Velvet Class</span>
+                                <span class="feature-tag">Dolby Atmos</span>
+                            </div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Plaza Senayan">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Plaza+Senayan+Jakarta" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="cinema-item" data-lat="-6.1754" data-lon="106.8272"> <!-- Monas Area -->
+                        <div class="cinema-image-wrapper">
+                            <img src="images/cinema-branch6.jpg" alt="Absolute Cinema Monas View">
+                        </div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Monas View</h3>
+                            <p class="cinema-address">Jl. Medan Merdeka Utara No. 1, Jakarta Pusat, DKI Jakarta 10110</p>
+                            <div class="cinema-features">
+                                <span class="feature-tag">Regular</span>
+                            </div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Monas View">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Monas+View+Jakarta" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="cinema-item" data-lat="-6.9175" data-lon="107.6191"> <!-- Bandung City Center -->
+                        <div class="cinema-image-wrapper">
+                            <img src="images/cinema-branch7.jpg" alt="Absolute Cinema Alun-Alun Bandung">
+                        </div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Alun-Alun Bandung</h3>
+                            <p class="cinema-address">Jl. Asia Afrika, Bandung, Jawa Barat 40261</p>
+                            <div class="cinema-features">
+                                <span class="feature-tag">4DX</span>
+                                <span class="feature-tag">Regular</span>
+                            </div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Alun-Alun Bandung">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Alun-Alun+Bandung" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="cinema-item" data-lat="-7.2575" data-lon="112.7521"> <!-- Surabaya City Center -->
+                        <div class="cinema-image-wrapper">
+                            <img src="images/cinema-branch8.jpg" alt="Absolute Cinema Delta Plaza">
+                        </div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Delta Plaza</h3>
+                            <p class="cinema-address">Plaza Surabaya, Jl. Pemuda No.31-37, Surabaya, Jawa Timur 60271</p>
+                            <div class="cinema-features">
+                                <span class="feature-tag">Starium</span>
+                                <span class="feature-tag">Cafe</span>
+                            </div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Delta Plaza">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Delta+Plaza+Surabaya" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+
+                     <article class="cinema-item" data-lat="-7.9839" data-lon="112.6214"> <!-- Malang -->
+                        <div class="cinema-image-wrapper">
+                            <img src="images/cinema-branch9.jpg" alt="Absolute Cinema Malang Town Square">
+                        </div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Malang Town Square</h3>
+                            <p class="cinema-address">Malang Town Square, Jl. Veteran No.2, Malang, Jawa Timur 65145</p>
+                            <div class="cinema-features">
+                                <span class="feature-tag">Regular</span>
+                                <span class="feature-tag">Popcorn XXL</span>
+                            </div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Malang Town Square">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Malang+Town+Square" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="cinema-item" data-lat="-7.7956" data-lon="110.3695"> <!-- Yogyakarta -->
+                        <div class="cinema-image-wrapper">
+                            <img src="images/cinema-branch10.jpg" alt="Absolute Cinema Ambarrukmo Plaza">
+                        </div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Ambarrukmo Plaza</h3>
+                            <p class="cinema-address">Plaza Ambarrukmo, Jl. Laksda Adisucipto, Yogyakarta, DIY 55281</p>
+                            <div class="cinema-features">
+                                <span class="feature-tag">Gold Class</span>
+                                <span class="feature-tag">Lounge</span>
+                            </div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Ambarrukmo Plaza">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Ambarrukmo+Plaza+Yogyakarta" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Tambahkan 15 bioskop lagi dengan data placeholder -->
+                    <!-- CATATAN: Terapkan struktur yang sama seperti di atas untuk semua item bioskop di bawah ini, -->
+                    <!-- termasuk data-lat, data-lon, cinema-features, dan cinema-item-actions. -->
+                    <!-- alt text pada img juga perlu diperbaiki. -->
+
+                    <article class="cinema-item" data-lat="-6.2383" data-lon="106.9756"> <!-- Bekasi -->
+                        <div class="cinema-image-wrapper"><img src="images/cinema-branch11.jpg" alt="Absolute Cinema Bekasi Mega Mall"></div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Bekasi Mega Mall</h3>
+                            <p class="cinema-address">Jl. Jend. Ahmad Yani No.1, Bekasi</p>
+                            <div class="cinema-features"><span class="feature-tag">Regular</span></div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Bekasi Mega Mall">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Bekasi+Mega+Mall" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="cinema-item" data-lat="-6.3690" data-lon="106.8310"> <!-- Depok -->
+                        <div class="cinema-image-wrapper"><img src="images/cinema-branch12.jpg" alt="Absolute Cinema Margo City"></div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Margo City</h3>
+                            <p class="cinema-address">Jl. Margonda Raya No.358, Depok</p>
+                            <div class="cinema-features"><span class="feature-tag">IMAX</span> <span class="feature-tag">Cafe</span></div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Margo City">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Margo+City+Depok" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="cinema-item" data-lat="-6.5950" data-lon="106.8060"> <!-- Bogor -->
+                        <div class="cinema-image-wrapper"><img src="images/cinema-branch13.jpg" alt="Absolute Cinema Botani Square"></div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Botani Square</h3>
+                            <p class="cinema-address">Jl. Raya Pajajaran, Bogor</p>
+                            <div class="cinema-features"><span class="feature-tag">Regular</span></div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Botani Square">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Botani+Square+Bogor" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="cinema-item" data-lat="-6.1256" data-lon="106.6550"> <!-- Tangerang -->
+                        <div class="cinema-image-wrapper"><img src="images/cinema-branch14.jpg" alt="Absolute Cinema Summarecon Mall Serpong"></div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Summarecon Mall Serpong</h3>
+                            <p class="cinema-address">Jl. Gading Serpong Boulevard, Tangerang</p>
+                            <div class="cinema-features"><span class="feature-tag">Dolby Atmos</span> <span class="feature-tag">Premiere</span></div>
+                             <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Summarecon Mall Serpong">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Summarecon+Mall+Serpong" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+                     <article class="cinema-item" data-lat="-5.1477" data-lon="119.4326"> <!-- Makassar -->
+                        <div class="cinema-image-wrapper"><img src="images/cinema-branch15.jpg" alt="Absolute Cinema Panakkukang Mall"></div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Panakkukang Mall</h3>
+                            <p class="cinema-address">Jl. Boulevard, Makassar, Sulawesi Selatan</p>
+                            <div class="cinema-features"><span class="feature-tag">Regular</span></div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Panakkukang Mall">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Panakkukang+Mall+Makassar" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="cinema-item" data-lat="3.5952" data-lon="98.6722"> <!-- Medan -->
+                        <div class="cinema-image-wrapper"><img src="images/cinema-branch16.jpg" alt="Absolute Cinema Centre Point Medan"></div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Centre Point Medan</h3>
+                            <p class="cinema-address">Jl. Jawa No.8, Medan, Sumatera Utara</p>
+                            <div class="cinema-features"><span class="feature-tag">The Premiere</span> <span class="feature-tag">Dolby Atmos</span></div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Centre Point Medan">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Centre+Point+Medan" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="cinema-item" data-lat="-0.9471" data-lon="100.3600"> <!-- Padang -->
+                        <div class="cinema-image-wrapper"><img src="images/cinema-branch17.jpg" alt="Absolute Cinema Plaza Andalas"></div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Plaza Andalas</h3>
+                            <p class="cinema-address">Jl. Pemuda No.15, Padang, Sumatera Barat</p>
+                            <div class="cinema-features"><span class="feature-tag">Regular</span></div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Plaza Andalas">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Plaza+Andalas+Padang" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="cinema-item" data-lat="-3.0149" data-lon="104.7599"> <!-- Palembang -->
+                        <div class="cinema-image-wrapper"><img src="images/cinema-branch18.jpg" alt="Absolute Cinema Palembang Icon"></div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Palembang Icon</h3>
+                            <p class="cinema-address">Jl. POM IX, Palembang, Sumatera Selatan</p>
+                            <div class="cinema-features"><span class="feature-tag">IMAX</span> <span class="feature-tag">Regular</span></div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Palembang Icon">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Palembang+Icon" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="cinema-item" data-lat="-8.6705" data-lon="115.2126"> <!-- Denpasar -->
+                        <div class="cinema-image-wrapper"><img src="images/cinema-branch19.jpg" alt="Absolute Cinema Level 21 Mall"></div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Level 21 Mall</h3>
+                            <p class="cinema-address">Jl. Teuku Umar No.1, Denpasar, Bali</p>
+                            <div class="cinema-features"><span class="feature-tag">The Premiere</span> <span class="feature-tag">Cafe</span></div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Level 21 Mall">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Level+21+Mall+Denpasar" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="cinema-item" data-lat="-7.0051" data-lon="110.4381"> <!-- Semarang -->
+                        <div class="cinema-image-wrapper"><img src="images/cinema-branch20.jpg" alt="Absolute Cinema Paragon Mall Semarang"></div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Paragon Mall Semarang</h3>
+                            <p class="cinema-address">Jl. Pemuda No.118, Semarang, Jawa Tengah</p>
+                            <div class="cinema-features"><span class="feature-tag">Dolby Atmos</span> <span class="feature-tag">Regular</span></div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Paragon Mall Semarang">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Paragon+Mall+Semarang" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="cinema-item" data-lat="-6.2100" data-lon="106.8400"> <!-- Jakarta Selatan - Tebet -->
+                        <div class="cinema-image-wrapper"><img src="images/cinema-branch21.jpg" alt="Absolute Cinema Kota Kasablanka"></div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Kota Kasablanka</h3>
+                            <p class="cinema-address">Jl. Casablanca Raya Kav. 88, Jakarta Selatan</p>
+                            <div class="cinema-features"><span class="feature-tag">IMAX</span> <span class="feature-tag">Gold Class</span></div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Kota Kasablanka">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Kota+Kasablanka+Jakarta" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="cinema-item" data-lat="-6.1300" data-lon="106.7500"> <!-- Jakarta Barat - Puri -->
+                        <div class="cinema-image-wrapper"><img src="images/cinema-branch22.jpg" alt="Absolute Cinema Lippo Mall Puri"></div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Lippo Mall Puri</h3>
+                            <p class="cinema-address">Jl. Puri Indah Raya Blok U1, Jakarta Barat</p>
+                            <div class="cinema-features"><span class="feature-tag">Starium</span> <span class="feature-tag">Regular</span></div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Lippo Mall Puri">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Lippo+Mall+Puri+Jakarta" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="cinema-item" data-lat="-6.1900" data-lon="106.9000"> <!-- Jakarta Timur - Rawamangun -->
+                        <div class="cinema-image-wrapper"><img src="images/cinema-branch23.jpg" alt="Absolute Cinema Arion Mall"></div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Arion Mall</h3>
+                            <p class="cinema-address">Jl. Pemuda Kav. 3-4, Rawamangun, Jakarta Timur</p>
+                            <div class="cinema-features"><span class="feature-tag">Regular</span> <span class="feature-tag">Sweetbox</span></div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Arion Mall">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Arion+Mall+Jakarta" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="cinema-item" data-lat="-6.1200" data-lon="106.8300"> <!-- Jakarta Utara - Kelapa Gading -->
+                        <div class="cinema-image-wrapper"><img src="images/cinema-branch24.jpg" alt="Absolute Cinema Mall Kelapa Gading"></div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Mall Kelapa Gading</h3>
+                            <p class="cinema-address">Jl. Boulevard Kelapa Gading Blok M, Jakarta Utara</p>
+                            <div class="cinema-features"><span class="feature-tag">4DX</span> <span class="feature-tag">Velvet</span> <span class="feature-tag">IMAX</span></div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Mall Kelapa Gading">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Mall+Kelapa+Gading+Jakarta" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="cinema-item" data-lat="-6.8800" data-lon="107.6000"> <!-- Bandung - Dago -->
+                        <div class="cinema-image-wrapper"><img src="images/cinema-branch25.jpg" alt="Absolute Cinema Dago Plaza"></div>
+                        <div class="cinema-info">
+                            <h3 class="cinema-location">Absolute Cinema Dago Plaza</h3>
+                            <p class="cinema-address">Jl. Ir. H. Juanda No.61-63, Bandung</p>
+                            <div class="cinema-features"><span class="feature-tag">Regular</span> <span class="feature-tag">Cafe</span></div>
+                            <div class="cinema-item-actions">
+                                <a href="now-showing.html" class="btn-select-cinema" data-cinema-name="Absolute Cinema Dago Plaza">Lihat Jadwal & Pesan</a>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Absolute+Cinema+Dago+Plaza+Bandung" target="_blank" class="btn-map">Lihat Peta</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Absolute Cinema Cinemas. Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
